@@ -21,5 +21,6 @@ public class Main {
 
         // Kör ett testsäljflöde
         view.runFakeSale();
+        view.runFakeSale();
     }
 }
