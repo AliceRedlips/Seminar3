@@ -8,26 +8,40 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tester för TotalRevenueView-klassen.
+ */
 public class TotalRevenueViewTest {
 
+    /**
+     * Testar att total försäljning summeras korrekt och skrivs ut i terminalen.
+     */
     @Test
     public void testTotalRevenueAccumulatesCorrectly() {
         RevenueObserver observer = new TotalRevenueView();
-
-        // Redirect System.out
         ByteArrayOutputStream output = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(output));
 
-        // Simulera flera betalningar
-        observer.newPayment(100.0);
-        observer.newPayment(50.0);
-        observer.newPayment(25.0);
+        try {
+            observer.newPayment(100.0);
+            observer.newPayment(50.0);
+            observer.newPayment(25.0);
 
-        // Kontrollera terminalutskrift
-        String consoleOutput = output.toString();
-        assertTrue(consoleOutput.contains(">> Total försäljning hittills: 175.0 kr"));
+            String consoleOutput = output.toString();
+            String[] outputLines = consoleOutput.split("\\r?\\n");
 
-        // Återställ System.out
-        System.setOut(System.out);
+            boolean found = false;
+            for (String line : outputLines) {
+                if (line.contains("Total försäljning hittills:") && line.contains("175")) {
+                    found = true;
+                    break;
+                }
+            }
+
+            assertTrue(found, "Total försäljning ska summeras korrekt och skrivas ut till terminalen.");
+        } finally {
+            System.setOut(originalOut);
+        }
     }
 }

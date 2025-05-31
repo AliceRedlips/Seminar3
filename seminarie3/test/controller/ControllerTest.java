@@ -7,9 +7,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tester för Controller-klassen.
+ */
 public class ControllerTest {
     private Controller controller;
 
+    /**
+     * Initierar testmiljön innan varje testfall.
+     */
     @BeforeEach
     public void setUp() {
         Register register = new Register(1000.0);
@@ -20,6 +26,9 @@ public class ControllerTest {
         controller.startNewSale();
     }
 
+    /**
+     * Testar att ett korrekt artikel-ID kan scannas och läggas till försäljningen.
+     */
     @Test
     public void testScanItemValid() throws ItemNotFoundException, DatabaseFailureException {
         controller.scanItem("001");
@@ -27,6 +36,9 @@ public class ControllerTest {
         assertEquals(1, controller.getSaleDTO().getItems().size());
     }
 
+    /**
+     * Testar att ItemNotFoundException kastas vid ogiltigt artikel-ID.
+     */
     @Test
     public void testScanItem_ItemNotFoundExceptionThrown() {
         assertThrows(ItemNotFoundException.class, () -> {
@@ -34,6 +46,9 @@ public class ControllerTest {
         });
     }
 
+    /**
+     * Testar att DatabaseFailureException kastas när databasfel simuleras.
+     */
     @Test
     public void testScanItem_DatabaseFailureExceptionThrown() {
         assertThrows(DatabaseFailureException.class, () -> {

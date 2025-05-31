@@ -2,8 +2,19 @@ package integration;
 
 import model.ItemDTO;
 
+/**
+ * Representerar det externa lagersystemet som tillhandahåller artikelinformation.
+ */
 public class ExternalInventorySystem {
 
+    /**
+     * Hämtar artikelinformation baserat på artikel-ID.
+     *
+     * @param itemID Artikelns ID.
+     * @return ItemDTO-objekt med artikelinformation.
+     * @throws ItemNotFoundException Om artikeln inte finns i systemet.
+     * @throws DatabaseFailureException Om databasen inte kan nås.
+     */
     public ItemDTO getItemDescription(String itemID) throws ItemNotFoundException, DatabaseFailureException {
         if ("fail".equals(itemID)) {
             throw new DatabaseFailureException("Database connection failed for itemID: " + itemID);

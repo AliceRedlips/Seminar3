@@ -40,16 +40,18 @@ public class Controller {
         sale = new Sale();
     }
 
-    // tidigare skrivna scanItem som hade system.out.println när det ska inte hanteras i controller
-    // public void scanItem(String itemId) throws ItemNotFoundException, DatabaseFailureException {
-    //     ItemDTO item = inventorySystem.getItemDescription(itemId);
-    //     if (item != null) {
-    //         sale.addItem(item);
-    //     } else {
-    //         System.out.println("Artikeln kunde inte hittas.");
-    //     }
-    // }
-
+    /**
+     * tidigare skrivna scanItem som hade system.out.println när det ska inte hanteras i controller
+      public void scanItem(String itemId) throws ItemNotFoundException, DatabaseFailureException {
+         ItemDTO item = inventorySystem.getItemDescription(itemId);
+         if (item != null) {
+             sale.addItem(item);
+         } else {
+             System.out.println("Artikeln kunde inte hittas.");
+         }
+     }
+    */
+    
 
     /**
      * Scans an item by identifier and adds it to the current sale.

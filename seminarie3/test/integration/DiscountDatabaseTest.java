@@ -4,8 +4,14 @@ import model.Discount;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tester för DiscountDatabase-klassen.
+ */
 public class DiscountDatabaseTest {
 
+    /**
+     * Testar att rätt rabatt returneras för en giltig VIP-kund.
+     */
     @Test
     public void testFindDiscount() {
         DiscountDatabase db = new DiscountDatabase();
