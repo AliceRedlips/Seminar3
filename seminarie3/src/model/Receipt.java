@@ -7,7 +7,7 @@ import java.util.List;
  * Representerar ett kvitto för en försäljning.
  */
 public class Receipt {
-    private List<ItemDTO> items;
+    private List<SoldItem> items;
     private double totalPrice;
     private double amountPaid;
     private double change;
@@ -20,14 +20,14 @@ public class Receipt {
      * @param payment   Betalningen.
      */
     public Receipt(SaleDTO saleDTO, Payment payment) {
-        this.items = saleDTO.getItems();
+        this.items = saleDTO.getSoldItems();
         this.totalPrice = saleDTO.getTotalPrice();
         this.amountPaid = payment.getAmountPaid();
         this.change = payment.getChange();
         this.timeOfSale = LocalDateTime.now();
     }
 
-    public List<ItemDTO> getItems() {
+    public List<SoldItem> getItems() {
         return items;
     }
 

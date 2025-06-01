@@ -29,5 +29,6 @@ public class Main {
         View view = new View(controller);
 
         view.runFakeSale();
+        view.runFakeSale();
     }
 }

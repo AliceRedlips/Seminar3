@@ -12,9 +12,11 @@ public class ExternalAccountingSystem {
      *
      * @param receipt Kvitto som innehåller försäljningsdata.
      */
-    public void logSale(Receipt receipt) {
-        System.out.println("Försäljning loggad till bokföringssystem:");
-        System.out.println("Total: " + receipt.getTotalPrice() + " kr");
-        System.out.println("Tidpunkt: " + receipt.getTimeOfSale());
+
+        public void logSale(Receipt receipt) {
+            System.out.println("Försäljning loggad till bokföringssystem:");
+            System.out.println("Total: " +
+                    String.format("%.2f", receipt.getTotalPrice()) + " kr");
+            System.out.println("Tidpunkt: " + receipt.getTimeOfSale());
+        }
     }
-}

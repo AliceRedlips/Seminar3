@@ -24,7 +24,7 @@ public class ReceiptTest {
         payment.calculateChange(sale.getTotalPrice());
         Receipt receipt = new Receipt(saleDTO, payment);
 
-        List<ItemDTO> items = receipt.getItems();
+        List<SoldItem> items = receipt.getItems();
         assertEquals(1, items.size());
         assertTrue(items.get(0).getName().contains("Mjölk"));
     }

@@ -6,25 +6,25 @@ import java.util.List;
  * Data Transfer Object (DTO) för att transportera information om en försäljning.
  */
 public class SaleDTO {
-    private List<ItemDTO> items;
+    private List<SoldItem> soldItems;
     private double totalPrice;
     private boolean discountApplied;
 
     /**
      * Skapar en SaleDTO med information om försäljningen.
      *
-     * @param items Artiklar i försäljningen.
+     * @param soldItems Artiklar i försäljningen.
      * @param totalPrice Totalpriset för försäljningen.
      * @param discountApplied Om rabatt har tillämpats.
      */
-    public SaleDTO(List<ItemDTO> items, double totalPrice, boolean discountApplied) {
-        this.items = items;
+    public SaleDTO(List<SoldItem> soldItems, double totalPrice, boolean discountApplied) {
+        this.soldItems = soldItems;
         this.totalPrice = totalPrice;
         this.discountApplied = discountApplied;
     }
 
-    public List<ItemDTO> getItems() {
-        return items;
+    public List<SoldItem> getSoldItems() {
+        return soldItems;
     }
 
     public double getTotalPrice() {

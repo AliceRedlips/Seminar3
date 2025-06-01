@@ -1,17 +1,17 @@
 package model;
 
 /**
- * Represents an item in a sale, including quantity and item information.
+ * Representerar en såld artikel med kvantitet.
  */
 public class SoldItem {
-    private final ItemDTO item;
+    private ItemDTO item;
     private int quantity;
 
     /**
-     * Creates a new SoldItem.
+     * Skapar en såld artikel.
      *
-     * @param item     The item being sold.
-     * @param quantity The number of units sold.
+     * @param item     Artikeldatan (id, namn, pris, moms)
+     * @param quantity Antal sålda enheter
      */
     public SoldItem(ItemDTO item, int quantity) {
         this.item = item;
@@ -19,47 +19,83 @@ public class SoldItem {
     }
 
     /**
-     * Increases the quantity of the sold item.
+     * Hämtar artikeldatan.
      *
-     * @param amount The number of units to add.
-     */
-    public void increaseQuantity(int amount) {
-        quantity += amount;
-    }
-
-    /**
-     * Returns the current quantity of the sold item.
-     *
-     * @return The quantity sold.
-     */
-    public int getQuantity() {
-        return quantity;
-    }
-
-    /**
-     * Returns the original item information.
-     *
-     * @return The ItemDTO object representing the product.
+     * @return ItemDTO
      */
     public ItemDTO getItem() {
         return item;
     }
 
     /**
-     * Creates a new ItemDTO with modified name and total price,
-     * based on the quantity sold. Used for receipt and display purposes.
+     * Hämtar antalet sålda artiklar.
      *
-     * @return An ItemDTO representing the sold item and quantity.
+     * @return antal
      */
-    public ItemDTO toItemDTO() {
-        double unitPriceWithVAT = item.getPrice() + item.getPrice() * item.getVAT();
-        double totalPrice = unitPriceWithVAT * quantity;
+    public int getQuantity() {
+        return quantity;
+    }
 
-        return new ItemDTO(
-            item.getItemID(),
-            item.getName() + " x" + quantity,
-            totalPrice,
-            item.getVAT()
-        );
+    /**
+     * Ökar antalet sålda artiklar.
+     *
+     * @param amount antal att öka med
+     */
+    public void increaseQuantity(int amount) {
+        this.quantity += amount;
+    }
+
+    /**
+     * Hämtar artikel-ID.
+     *
+     * @return artikel-ID
+     */
+    public String getItemID() {
+        return item.getItemID();
+    }
+
+    /**
+     * Hämtar artikelns namn.
+     *
+     * @return namn
+     */
+    public String getName() {
+        return item.getName();
+    }
+
+    /**
+     * Hämtar artikelns pris exkl moms.
+     *
+     * @return pris
+     */
+    public double getPrice() {
+        return item.getPrice();
+    }
+
+    /**
+     * Hämtar artikelns moms.
+     *
+     * @return moms
+     */
+    public double getVAT() {
+        return item.getVAT();
+    }
+
+    /**
+     * Beräknar totalpriset för denna sålda artikel (inkl moms).
+     *
+     * @return Totalpris (inkl moms).
+     */
+    public double getTotalPriceWithVAT() {
+        return quantity * item.getPrice() * (1 + item.getVAT());
+    }
+
+    /**
+     * Beräknar momsbeloppet för denna sålda artikel.
+     *
+     * @return Momsbelopp (kr).
+     */
+    public double getTotalVAT() {
+        return quantity * item.getPrice() * item.getVAT();
     }
 }

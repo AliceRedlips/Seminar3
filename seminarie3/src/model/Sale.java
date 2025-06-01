@@ -37,16 +37,12 @@ public class Sale {
     }
 
     /**
-     * Returns a list of ItemDTOs representing the items in the sale.
+     * Returns a list of SoldItem objects representing the items in the sale.
      *
      * @return A list of all sold items including quantity.
      */
-    public List<ItemDTO> getItems() {
-        List<ItemDTO> result = new ArrayList<>();
-        for (SoldItem sold : items.values()) {
-            result.add(sold.toItemDTO());
-        }
-        return result;
+    public List<SoldItem> getSoldItems() {
+        return new ArrayList<>(items.values());
     }
 
     /**
@@ -91,6 +87,6 @@ public class Sale {
      * @return The sale data transfer object.
      */
     public SaleDTO createSaleDTO() {
-        return new SaleDTO(getItems(), getTotalPrice(), discountApplied);
+        return new SaleDTO(getSoldItems(), getTotalPrice(), discountApplied);
     }
 }

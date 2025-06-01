@@ -13,9 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ControllerTest {
     private Controller controller;
 
-    /**
-     * Initierar testmiljön innan varje testfall.
-     */
+    
     @BeforeEach
     public void setUp() {
         Register register = new Register(1000.0);
@@ -33,7 +31,7 @@ public class ControllerTest {
     public void testScanItemValid() throws ItemNotFoundException, DatabaseFailureException {
         controller.scanItem("001");
         assertNotNull(controller.getSaleDTO());
-        assertEquals(1, controller.getSaleDTO().getItems().size());
+        assertEquals(1, controller.getSaleDTO().getSoldItems().size());
     }
 
     /**

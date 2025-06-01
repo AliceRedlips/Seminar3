@@ -35,19 +35,16 @@ public class View {
 
         saleIsValid &= scanAndHandle("001");
         saleIsValid &= scanAndHandle("002");
-        // För att testa felhantering kan du avkommentera dessa:
-        // saleIsValid &= scanAndHandle("abc"); // ogiltigt ID
-        // saleIsValid &= scanAndHandle("999"); // simulerat databashaveri
 
         if (saleIsValid) {
             SaleDTO saleInfo = controller.getSaleDTO();
-            displayItems(saleInfo.getItems());
-            System.out.println("Totalpris (före rabatt): " + saleInfo.getTotalPrice() + " kr");
+            displayItems(saleInfo.getSoldItems());
+            System.out.printf("Totalpris (före rabatt): %.2f kr%n", saleInfo.getTotalPrice());
 
             controller.requestDiscount("vip123");
 
             SaleDTO discountedSale = controller.getSaleDTO();
-            System.out.println("Totalpris (efter rabatt): " + discountedSale.getTotalPrice() + " kr");
+            System.out.printf("Totalpris (efter rabatt): %.2f kr%n", discountedSale.getTotalPrice());
 
             Receipt receipt = controller.pay(100);
             displayReceipt(receipt);
@@ -77,19 +74,31 @@ public class View {
         }
     }
 
-    private void displayItems(List<ItemDTO> items) {
-        for (ItemDTO item : items) {
-            System.out.println("Artikel: " + item.getName() +
-                    " - Pris: " + item.getPrice() + " kr (moms: " + (item.getVAT() * 100) + "%)");
+    private void displayItems(List<SoldItem> soldItems) {
+        for (SoldItem sold : soldItems) {
+            double totalItemPrice = (sold.getItem().getPrice() + sold.getItem().getPrice() * sold.getItem().getVAT()) * sold.getQuantity();
+            System.out.printf("%s %d x %.2f = %.2f kr%n",
+                    sold.getName(), sold.getQuantity(),
+                    sold.getItem().getPrice(), totalItemPrice);
         }
     }
 
     private void displayReceipt(Receipt receipt) {
         System.out.println("\n--- Kvitto ---");
-        displayItems(receipt.getItems());
-        System.out.println("Total: " + receipt.getTotalPrice() + " kr");
-        System.out.println("Betalat: " + receipt.getAmountPaid() + " kr");
-        System.out.println("Växel: " + receipt.getChange() + " kr");
-        System.out.println("Tid: " + receipt.getTimeOfSale());
+        System.out.println("Tidpunkt: " + receipt.getTimeOfSale());
+        System.out.println();
+        System.out.println("Artiklar:");
+        for (SoldItem sold : receipt.getItems()) {
+            double itemTotal = (sold.getPrice() + sold.getPrice() * sold.getVAT()) * sold.getQuantity();
+            System.out.printf(" %s x%d à %.2f SEK = %.2f SEK (moms: %.1f%%)%n",
+                    sold.getName(), sold.getQuantity(), sold.getPrice(),
+                    itemTotal, sold.getVAT() * 100);
+        }
+        System.out.println();
+        System.out.printf("Total: %.2f SEK%n", receipt.getTotalPrice());
+        System.out.printf("Betalat: %.2f SEK%n", receipt.getAmountPaid());
+        System.out.printf("Växel: %.2f SEK%n", receipt.getChange());
+        System.out.println("--- Slut på kvitto ---");
     }
+    
 }
