@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ControllerTest {
     private Controller controller;
 
-    
     @BeforeEach
     public void setUp() {
         Register register = new Register(1000.0);
@@ -25,11 +24,11 @@ public class ControllerTest {
     }
 
     /**
-     * Testar att ett korrekt artikel-ID kan scannas och läggas till försäljningen.
+     * Testar att ett korrekt artikel-ID kan skannas och läggas till försäljningen.
      */
     @Test
     public void testScanItemValid() throws ItemNotFoundException, DatabaseFailureException {
-        controller.scanItem("001");
+        controller.scanItem("001", 1);
         assertNotNull(controller.getSaleDTO());
         assertEquals(1, controller.getSaleDTO().getSoldItems().size());
     }
@@ -40,7 +39,7 @@ public class ControllerTest {
     @Test
     public void testScanItem_ItemNotFoundExceptionThrown() {
         assertThrows(ItemNotFoundException.class, () -> {
-            controller.scanItem("999");
+            controller.scanItem("999", 1);
         });
     }
 
@@ -50,7 +49,7 @@ public class ControllerTest {
     @Test
     public void testScanItem_DatabaseFailureExceptionThrown() {
         assertThrows(DatabaseFailureException.class, () -> {
-            controller.scanItem("fail");
+            controller.scanItem("fail", 1);
         });
     }
 }

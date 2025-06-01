@@ -22,7 +22,7 @@ public class Controller {
     private DiscountDatabase discountDatabase;
     private final List<RevenueObserver> revenueObservers = new ArrayList<>();
 
- /**
+    /**
      * Creates a new instance of Controller and connects system dependencies.
      */
     public Controller(Register register, ExternalInventorySystem inventorySystem,
@@ -41,30 +41,18 @@ public class Controller {
     }
 
     /**
-     * tidigare skrivna scanItem som hade system.out.println när det ska inte hanteras i controller
-      public void scanItem(String itemId) throws ItemNotFoundException, DatabaseFailureException {
-         ItemDTO item = inventorySystem.getItemDescription(itemId);
-         if (item != null) {
-             sale.addItem(item);
-         } else {
-             System.out.println("Artikeln kunde inte hittas.");
-         }
-     }
-    */
-    
-
-    /**
      * Scans an item by identifier and adds it to the current sale.
      *
-     * @param itemId The identifier of the item.
-     * @throws ItemNotFoundException       If item not found in inventory.
-     * @throws DatabaseFailureException    If the inventory system fails.
+     * @param itemId    The identifier of the item.
+     * @param quantity  The quantity of the item to be added.
+     * @throws ItemNotFoundException    If item not found in inventory.
+     * @throws DatabaseFailureException If the inventory system fails.
      */
-    public void scanItem(String itemId) throws ItemNotFoundException, DatabaseFailureException {
+    public void scanItem(String itemId, int quantity) throws ItemNotFoundException, DatabaseFailureException {
         ItemDTO item = inventorySystem.getItemDescription(itemId);
-        sale.addItem(item);
+        sale.addItem(item, quantity);
     }
-    
+
     /**
      * Applies a discount to the current sale for the given customer.
      *
@@ -99,7 +87,7 @@ public class Controller {
         Receipt receipt = new Receipt(saleDTO, payment);
         accountingSystem.logSale(receipt);
 
-        notifyObservers(sale.getTotalPrice()); // OBSERVER-koppling här!
+        notifyObservers(sale.getTotalPrice());
 
         return receipt;
     }

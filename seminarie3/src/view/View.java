@@ -26,15 +26,17 @@ public class View {
     }
 
     /**
-     * Simulerar en försäljning med artikel-ID och undantagshantering.
+     * Simulerar en försäljning med artikel-ID och kvantitet.
      */
     public void runFakeSale() {
         controller.startNewSale();
 
         boolean saleIsValid = true;
 
-        saleIsValid &= scanAndHandle("001");
-        saleIsValid &= scanAndHandle("002");
+        saleIsValid &= scanAndHandle("001", 2); 
+        saleIsValid &= scanAndHandle("002", 1); 
+        // saleIsValid &= scanAndHandle("999", 2); 
+        // saleIsValid &= scanAndHandle("abc", 1); 
 
         if (saleIsValid) {
             SaleDTO saleInfo = controller.getSaleDTO();
@@ -54,21 +56,22 @@ public class View {
     }
 
     /**
-     * Försöker skanna en artikel och hanterar eventuella undantag.
+     * Försöker skanna en artikel med kvantitet och hanterar eventuella undantag.
      *
      * @param itemId Artikelns ID.
+     * @param quantity Antal artiklar att skanna.
      * @return true om artikeln skannades korrekt, annars false.
      */
-    private boolean scanAndHandle(String itemId) {
+    private boolean scanAndHandle(String itemId, int quantity) {
         try {
-            controller.scanItem(itemId);
+            controller.scanItem(itemId, quantity);
             return true;
         } catch (ItemNotFoundException e) {
-            System.out.println(" Fel: Artikel med ID '" + itemId + "' hittades inte.");
+            System.out.println("Fel: Artikel med ID '" + itemId + "' hittades inte.");
             logger.logException(e);
             return false;
         } catch (DatabaseFailureException e) {
-            System.out.println(" Fel: Kunde inte ansluta till databasen.");
+            System.out.println("Fel: Kunde inte ansluta till databasen.");
             logger.logException(e);
             return false;
         }
@@ -77,7 +80,7 @@ public class View {
     private void displayItems(List<SoldItem> soldItems) {
         for (SoldItem sold : soldItems) {
             double totalItemPrice = (sold.getItem().getPrice() + sold.getItem().getPrice() * sold.getItem().getVAT()) * sold.getQuantity();
-            System.out.printf("%s %d x %.2f = %.2f kr%n",
+            System.out.printf("%s x%d à %.2f SEK = %.2f SEK%n",
                     sold.getName(), sold.getQuantity(),
                     sold.getItem().getPrice(), totalItemPrice);
         }
@@ -100,5 +103,4 @@ public class View {
         System.out.printf("Växel: %.2f SEK%n", receipt.getChange());
         System.out.println("--- Slut på kvitto ---");
     }
-    
 }

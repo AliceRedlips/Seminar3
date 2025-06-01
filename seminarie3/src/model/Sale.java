@@ -23,16 +23,17 @@ public class Sale {
     }
 
     /**
-     * Adds an item to the sale. If the item was already scanned, increases its quantity.
+     * Adds an item to the sale with specified quantity. If the item was already scanned, increases its quantity.
      *
      * @param item The item to be added or updated.
+     * @param quantity The quantity to be added.
      */
-    public void addItem(ItemDTO item) {
+    public void addItem(ItemDTO item, int quantity) {
         String id = item.getItemID();
         if (items.containsKey(id)) {
-            items.get(id).increaseQuantity(1);
+            items.get(id).increaseQuantity(quantity);
         } else {
-            items.put(id, new SoldItem(item, 1));
+            items.put(id, new SoldItem(item, quantity));
         }
     }
 

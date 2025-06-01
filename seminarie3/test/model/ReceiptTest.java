@@ -17,7 +17,7 @@ public class ReceiptTest {
     public void testReceiptContainsItems() {
         Sale sale = new Sale();
         ItemDTO item1 = new ItemDTO("001", "Mjölk", 10.0, 0.12);
-        sale.addItem(item1);
+        sale.addItem(item1, 1);
 
         SaleDTO saleDTO = sale.createSaleDTO();
         Payment payment = new Payment(100);
@@ -37,8 +37,8 @@ public class ReceiptTest {
         Sale sale = new Sale();
         ItemDTO item1 = new ItemDTO("001", "Mjölk", 10.0, 0.12);
         ItemDTO item2 = new ItemDTO("002", "Bröd", 20.0, 0.12);
-        sale.addItem(item1);
-        sale.addItem(item2);
+        sale.addItem(item1, 1);
+        sale.addItem(item2, 1);
 
         SaleDTO saleDTO = sale.createSaleDTO();
         Payment payment = new Payment(100);
@@ -56,7 +56,7 @@ public class ReceiptTest {
     public void testReceiptChangeCalculation() {
         Sale sale = new Sale();
         ItemDTO item1 = new ItemDTO("001", "Mjölk", 10.0, 0.12);
-        sale.addItem(item1);
+        sale.addItem(item1, 1);
 
         SaleDTO saleDTO = sale.createSaleDTO();
         Payment payment = new Payment(20);
@@ -67,4 +67,3 @@ public class ReceiptTest {
         assertEquals(expectedChange, receipt.getChange(), 0.001);
     }
 }
-
