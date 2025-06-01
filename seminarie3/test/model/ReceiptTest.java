@@ -17,7 +17,7 @@ public class ReceiptTest {
     public void testReceiptContainsItems() {
         Sale sale = new Sale();
         ItemDTO item1 = new ItemDTO("001", "Mjölk", 10.0, 0.12);
-        sale.addItem(item1, 1);
+        sale.addItem(item1, 2); // Lägg till 2 st av artikeln
 
         SaleDTO saleDTO = sale.createSaleDTO();
         Payment payment = new Payment(100);
@@ -26,6 +26,7 @@ public class ReceiptTest {
 
         List<SoldItem> items = receipt.getItems();
         assertEquals(1, items.size());
+        assertEquals(2, items.get(0).getQuantity());
         assertTrue(items.get(0).getName().contains("Mjölk"));
     }
 
@@ -56,14 +57,14 @@ public class ReceiptTest {
     public void testReceiptChangeCalculation() {
         Sale sale = new Sale();
         ItemDTO item1 = new ItemDTO("001", "Mjölk", 10.0, 0.12);
-        sale.addItem(item1, 1);
+        sale.addItem(item1, 2); // Lägg till 2 st av artikeln
 
         SaleDTO saleDTO = sale.createSaleDTO();
-        Payment payment = new Payment(20);
+        Payment payment = new Payment(50);
         payment.calculateChange(sale.getTotalPrice());
         Receipt receipt = new Receipt(saleDTO, payment);
 
-        double expectedChange = 20 - sale.getTotalPrice();
+        double expectedChange = 50 - sale.getTotalPrice();
         assertEquals(expectedChange, receipt.getChange(), 0.001);
     }
 }

@@ -1,12 +1,8 @@
 package controller;
 
-import integration.DatabaseFailureException;
-import integration.DiscountDatabase;
-import integration.ExternalAccountingSystem;
-import integration.ExternalInventorySystem;
-import integration.ItemNotFoundException;
+import integration.*;
+import model.Register;
 import model.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,10 +39,10 @@ public class Controller {
     /**
      * Scans an item by identifier and adds it to the current sale.
      *
-     * @param itemId    The identifier of the item.
-     * @param quantity  The quantity of the item to be added.
-     * @throws ItemNotFoundException    If item not found in inventory.
-     * @throws DatabaseFailureException If the inventory system fails.
+     * @param itemId The identifier of the item.
+     * @param quantity The quantity of the item to add.
+     * @throws ItemNotFoundException       If item not found in inventory.
+     * @throws DatabaseFailureException    If the inventory system fails.
      */
     public void scanItem(String itemId, int quantity) throws ItemNotFoundException, DatabaseFailureException {
         ItemDTO item = inventorySystem.getItemDescription(itemId);
