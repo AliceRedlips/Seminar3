@@ -3,31 +3,22 @@ package model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Representerar ett kvitto för en försäljning.
- */
 public class Receipt {
-    private List<SoldItem> items;
-    private double totalPrice;
-    private double amountPaid;
-    private double change;
-    private LocalDateTime timeOfSale;
+    private final List<SoldItemDTO> items;
+    private final double totalPrice;
+    private final double amountPaid;
+    private final double change;
+    private final LocalDateTime timeOfSale;
 
-    /**
-     * Skapar ett nytt kvitto baserat på en försäljning och betalning.
-     *
-     * @param saleDTO   Information om försäljningen.
-     * @param payment   Betalningen.
-     */
     public Receipt(SaleDTO saleDTO, Payment payment) {
-        this.items = saleDTO.getSoldItems();
+        this.items = saleDTO.getItems();
         this.totalPrice = saleDTO.getTotalPrice();
         this.amountPaid = payment.getAmountPaid();
         this.change = payment.getChange();
         this.timeOfSale = LocalDateTime.now();
     }
 
-    public List<SoldItem> getItems() {
+    public List<SoldItemDTO> getItems() {
         return items;
     }
 
