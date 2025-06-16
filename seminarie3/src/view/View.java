@@ -75,30 +75,28 @@ public class View {
         }
     }
 
-    private void displayItems(List<SoldItem> soldItems) {
-        for (SoldItem sold : soldItems) {
-            double totalItemPrice = (sold.getItem().getPrice() + sold.getItem().getPrice() * sold.getItem().getVAT()) * sold.getQuantity();
-            System.out.printf("%s %d x %.2f = %.2f kr%n",
-                    sold.getName(), sold.getQuantity(),
-                    sold.getItem().getPrice(), totalItemPrice);
+    private void displayItems(List<SoldItemDTO> items) {
+    for (SoldItemDTO item : items) {
+        double total = (item.getPrice() + item.getPrice() * item.getVAT()) * item.getQuantity();
+        System.out.printf("Artikel: %s x%d à %.2f kr = %.2f kr (moms: %.1f%%)%n",
+                item.getName(), item.getQuantity(), item.getPrice(), total, item.getVAT() * 100);
         }
     }
 
-    private void displayReceipt(Receipt receipt) {
-        System.out.println("\n--- Kvitto ---");
-        System.out.println("Tidpunkt: " + receipt.getTimeOfSale());
-        System.out.println();
-        System.out.println("Artiklar:");
-        for (SoldItem sold : receipt.getItems()) {
-            double itemTotal = (sold.getPrice() + sold.getPrice() * sold.getVAT()) * sold.getQuantity();
-            System.out.printf(" %s x%d à %.2f SEK = %.2f SEK (moms: %.1f%%)%n",
-                    sold.getName(), sold.getQuantity(), sold.getPrice(),
-                    itemTotal, sold.getVAT() * 100);
-        }
-        System.out.println();
-        System.out.printf("Total: %.2f SEK%n", receipt.getTotalPrice());
-        System.out.printf("Betalat: %.2f SEK%n", receipt.getAmountPaid());
-        System.out.printf("Växel: %.2f SEK%n", receipt.getChange());
-        System.out.println("--- Slut på kvitto ---");
+private void displayReceipt(Receipt receipt) {
+    System.out.println("\n--- Kvitto ---");
+    System.out.println("Tidpunkt: " + receipt.getTimeOfSale());
+    System.out.println("\nArtiklar:");
+    for (SoldItemDTO item : receipt.getItems()) {
+        double itemTotal = (item.getPrice() + item.getPrice() * item.getVAT()) * item.getQuantity();
+        System.out.printf(" %s x%d à %.2f SEK = %.2f SEK (moms: %.1f%%)%n",
+                item.getName(), item.getQuantity(), item.getPrice(),
+                itemTotal, item.getVAT() * 100);
     }
+    System.out.println();
+    System.out.printf("Total: %.2f SEK%n", receipt.getTotalPrice());
+    System.out.printf("Betalat: %.2f SEK%n", receipt.getAmountPaid());
+    System.out.printf("Växel: %.2f SEK%n", receipt.getChange());
+    System.out.println("--- Slut på kvitto ---");
+}
 }
