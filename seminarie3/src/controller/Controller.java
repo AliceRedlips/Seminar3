@@ -65,7 +65,10 @@ public class Controller {
      * @return SaleDTO containing items, total price, and discount status.
      */
     public SaleDTO getSaleDTO() {
-        return sale.createSaleDTO();
+         List<SoldItemDTO> dtos = sale.getSoldItems().stream()
+                                .map(SoldItem::toDTO)
+                                .collect(Collectors.toList());
+         return new SaleDTO(dtos, sale.getTotalPrice(), sale.isDiscountApplied());
     }
 
     /**
