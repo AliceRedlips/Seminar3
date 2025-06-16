@@ -82,13 +82,16 @@ public class Sale {
     public boolean isDiscountApplied() {
         return discountApplied;
     }
-
-    /**
+/**
      * Creates and returns a SaleDTO object containing current sale details.
      *
      * @return The sale data transfer object.
      */
     public SaleDTO createSaleDTO() {
-        return new SaleDTO(getSoldItems(), getTotalPrice(), discountApplied);
+        List<SoldItemDTO> soldItemDTOs = new ArrayList<>();
+        for (SoldItem sold : getSoldItems()) {
+            soldItemDTOs.add(new SoldItemDTO(sold.getItemID(), sold.getName(), sold.getPrice(), sold.getVAT(), sold.getQuantity()));
+        }
+        return new SaleDTO(soldItemDTOs, getTotalPrice(), discountApplied);
     }
 }
