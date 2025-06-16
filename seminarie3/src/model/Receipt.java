@@ -3,6 +3,9 @@ package model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Representerar ett kvitto efter genomförd försäljning.
+ */
 public class Receipt {
     private final List<SoldItemDTO> items;
     private final double totalPrice;
@@ -10,8 +13,14 @@ public class Receipt {
     private final double change;
     private final LocalDateTime timeOfSale;
 
+    /**
+     * Skapar ett nytt kvitto baserat på försäljningsdata och betalning.
+     *
+     * @param saleDTO Försäljningsinformationen.
+     * @param payment Betalningsinformationen.
+     */
     public Receipt(SaleDTO saleDTO, Payment payment) {
-        this.items = saleDTO.getItems();
+        this.items = saleDTO.getSoldItems();
         this.totalPrice = saleDTO.getTotalPrice();
         this.amountPaid = payment.getAmountPaid();
         this.change = payment.getChange();
