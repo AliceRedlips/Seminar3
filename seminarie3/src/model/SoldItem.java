@@ -82,20 +82,17 @@ public class SoldItem {
     }
 
     /**
-     * Beräknar totalpriset för denna sålda artikel (inkl moms).
+     * Konverterar SoldItem till en SoldItemDTO.
      *
-     * @return Totalpris (inkl moms).
+     * @return SoldItemDTO
      */
-    public double getTotalPriceWithVAT() {
-        return quantity * item.getPrice() * (1 + item.getVAT());
-    }
-
-    /**
-     * Beräknar momsbeloppet för denna sålda artikel.
-     *
-     * @return Momsbelopp (kr).
-     */
-    public double getTotalVAT() {
-        return quantity * item.getPrice() * item.getVAT();
+    public SoldItemDTO toDTO() {
+        return new SoldItemDTO(
+            item.getItemID(),
+            item.getName(),
+            item.getPrice(),
+            item.getVAT(),
+            quantity
+        );
     }
 }
